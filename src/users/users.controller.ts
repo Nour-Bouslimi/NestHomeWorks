@@ -1,18 +1,60 @@
+/* eslint-disable prettier/prettier */
 import {
   Body,
   Controller,
-  Delete,
   Get,
-  Headers,
   Param,
   Post,
   Put,
-  Query,
+
 } from '@nestjs/common';
 import { CreateUserDto } from './create-user.dto';
+import { UserService } from './user.service';
+import { UpdateUserDto } from './update-user.dto';
 
 @Controller('users')
 export class UsersController {
+  userService: UserService;
+  constructor(userService: UserService) {
+    this.userService = userService;
+  }
+
+@Post()
+  create(@Body() dto: CreateUserDto) {
+    return this.userService.create(dto);
+  }
+
+@Put('/activate')
+  activate(@Body() body: { email: string; password: string }) {
+    return this.userService.activate(body.email, body.password);
+  }
+  @Get('/active')
+  getActive() {
+    return this.userService.findActive();
+  }
+ @Get(':id')
+  getById(@Param('id') id: string) {
+    return this.userService.findOneById(id);
+  }
+
+@Get('email/:email')
+  getByEmail(@Param('email') email: string) {
+    return this.userService.findOneByEmail(email);
+  }
+
+ @Get()
+  getAll() {
+    return this.userService.findAll();
+  }
+
+  
+ @Put(':id')
+  update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
+    return this.userService.update(id, dto);
+  }
+
+
+  /* séance 2
   private users = [
     {
       id: 1,
@@ -103,5 +145,5 @@ export class UsersController {
   @Get('active/:status')
   getUsersActive(@Param('status') status: string) {
     return this.users.filter((u) => u.status === status);
-  }
+  }*/
 }
