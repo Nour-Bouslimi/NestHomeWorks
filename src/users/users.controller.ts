@@ -6,18 +6,18 @@ import {
   Param,
   Post,
   Put,
+  UseInterceptors,
 
 } from '@nestjs/common';
 import { CreateUserDto } from './create-user.dto';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './update-user.dto';
-
-@Controller('users')
+import { RoleFilterInterceptor } from './role-filter.interceptor';
+//controller destiné au clients (users)
+@Controller('client/users')
+@UseInterceptors(RoleFilterInterceptor)
 export class UsersController {
-  userService: UserService;
-  constructor(userService: UserService) {
-    this.userService = userService;
-  }
+    constructor(private userService: UserService) {}
 
 @Post()
   create(@Body() dto: CreateUserDto) {

@@ -23,6 +23,13 @@ export class Users {
   @Column({ default: true })
   active: boolean;
 
+  @Column()
+  role: 'admin' | 'client';
+  @Column()
+  createdAt: Date;
+  @Column()
+  updatedAt: Date;
+
   // Hook : avant insertion
   @BeforeInsert()
   logInsert() {
