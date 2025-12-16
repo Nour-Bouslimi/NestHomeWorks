@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable prettier/prettier */
 import { Entity, ObjectIdColumn, Column, BeforeInsert, AfterInsert, AfterUpdate, BeforeRemove } from 'typeorm';
-import { ObjectID } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import { Logger } from '@nestjs/common';
 
 @Entity('users')
@@ -12,7 +12,7 @@ export class Users {
   private static readonly logger = new Logger(Users.name);
 
   @ObjectIdColumn()
-  _id: ObjectID;
+  _id: ObjectId;
 
   @Column()
   email: string;

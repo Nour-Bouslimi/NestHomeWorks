@@ -5,6 +5,10 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Users } from './users/users.entity';
+import { MessagesModule } from './messages/messages.module';
+import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { Message } from './messages/message.entity';
 
 @Module({
   imports: [
@@ -17,10 +21,15 @@ import { Users } from './users/users.entity';
       //useNewUrlParser: true,
       //useUnifiedTopology: true,
       //database: 'nestdb',
-      entities: [Users],
+      entities: [Users,Message],
       synchronize: true,
     }),
-    UsersModule],
+    UsersModule,
+    MessagesModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
